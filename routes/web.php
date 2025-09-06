@@ -9,3 +9,7 @@ Route::get('/', function () {
 Route::get('/hello', function () {
     return "Hello World dari Laravel!";
 });
+
+Route::get('/nama', function () {
+    return "Hello, nama saya anas fajar !";
+});
