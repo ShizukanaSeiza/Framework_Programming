@@ -33,6 +33,6 @@ class StudentRegisterController extends Controller
         Auth::login($user);
 
         return redirect()->route('ekyc.step1')
-                         ->with('success', 'Registration berhasil! Silahkan lengkapi data E-KYC anda'); // Redirect to student dashboard
+                         ->with('success', 'Registrasi berhasil! Silahkan lengkapi data E-KYC anda'); // Redirect to student dashboard
     }
 }
