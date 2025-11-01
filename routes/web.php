@@ -40,12 +40,14 @@ Route::middleware('auth')->group(function () {
     Route::post('/register-mahasiswa', [StudentRegisterController::class, 'register']);
     
 Route::middleware(['auth'])->prefix('ekyc')->group(function () {
-    Route::get('step1', [EkycController::class, 'step1'])->name('ekcy.step1');
+    Route::get('step1', [EkycController::class, 'step1'])->name('ekyc.step1');
     Route::post('step1',[EkycController::class, 'storeStep1'])->name('ekyc.storeStep1');
 
-    // Sementara redirect kosong untuk step2
-    Route::get('step2', function () {
-        return "Step2: Upload Dokumen (belum dibuat)";
-    })->name('ekyc.step2');
+    Route::get('/ekyc/step2', [EkycController::class, 'step2'])->name('ekyc.step2');
+    Route::post('/ekyc/step2', [EkycController::class, 'storeStep2'])->name('ekyc.step2.store');
+    
+    Route::get('/ekyc/step3', [EkycController::class, 'showStep3'])->name('ekyc.step3');
+    Route::post('/ekyc/step3', [EkycController::class, 'storeStep3'])->name('ekyc.step3.store');
 });
+
 require __DIR__.'/auth.php';
