@@ -5,7 +5,7 @@
         </h2>
     </x-slot>
 
-    </div class="max-w-xl mx-auto bg-white p-6 rounded-lg shadow">
+    <div class="max-w-xl mx-auto mt-8 bg-white p-6 rounded-lg shadow">
         @if (session('success'))
             <div class="mb-4 text-green-600">{{ session('success') }}</div>
         @endif
