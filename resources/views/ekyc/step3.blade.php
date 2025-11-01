@@ -41,7 +41,7 @@
                 @if ($data && $data->file_kk)
                 <p class="text-sm text-gray-600 mt-1">File saat ini:</p>
                 <a href="{{ asset('storage/'.$data->file_kk) }}" target="_blank" 
-                    class="text-blue-600 hover:underline">Lihat KK</a>
+                    class="text-blue-600 underline">Lihat KK</a>
                 @endif
             </div>
             
@@ -52,7 +52,7 @@
                 @if ($data && $data->file_ijazah)
                 <p class="text-sm text-gray-600 mt-1">File saat ini:</p>
                 <a href="{{ asset('storage/'.$data->file_ijazah) }}" target="_blank" 
-                    class="text-blue-600 hover:underline">Lihat Ijazah</a>
+                    class="text-blue-600 underline">Lihat Ijazah</a>
                 @endif
             </div>
 
