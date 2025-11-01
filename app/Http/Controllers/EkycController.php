@@ -85,7 +85,7 @@ class EkycController extends Controller
     }
     public function storeStep3(Request $request)
     {
-        $validate->validate([
+        $request->validate([
             'asal_sd' => 'required|string|max:255',
             'asal_smp' => 'required|string|max:255',
             'asal_sma' => 'required|string|max:255',
