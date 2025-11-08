@@ -54,6 +54,11 @@ Route::middleware(['auth'])->prefix('ekyc')->group(function () {
 
     Route::get('/ekyc/step3', [EkycController::class, 'showStep3'])->name('ekyc.step3');
     Route::post('/ekyc/step3', [EkycController::class, 'storeStep3'])->name('ekyc.step3.store');
+
+    // Step 4 – Alamat Domisili & Referensi Sumber
+    Route::get('/ekyc/step4', [EkycController::class, 'showStep4'])->name('ekyc.step4');
+    Route::post('/ekyc/step4', [EkycController::class, 'storeStep4'])->name('ekyc.step4.store');
+        
 });
 
 
