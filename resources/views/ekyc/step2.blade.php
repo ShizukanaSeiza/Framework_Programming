@@ -32,11 +32,18 @@
                     <img src="{{ asset('storage/'.$data->file_selfie) }}" class="h-32 rounded mt-2 border">
                 @endif
             </div>
+
+            {{-- Navigasi --}}
             <div class="flex justify-between items-center mt-4">
                 <a href="{{ route('ekyc.step1') }}" class="text-sm text-gray-500 hover:text-gray-700">← Kembali ke Step 1</a>
+
+                @if ($data && $data->status === 'submitted')
+                        <a href="{{ route('ekyc.step3') }}" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Lanjut Step 3</a>
+                @else 
                 <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
-                    Simpan & Lanjut Step 3 →
+                        Lanjut Step 3 →
                 </button>
+                @endif
             </div>
         </form>
     </div>

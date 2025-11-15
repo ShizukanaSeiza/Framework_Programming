@@ -85,10 +85,14 @@
             {{-- Navigasi --}}
             <div class="flex justify-between items-center mt-4">
                 <a href="{{ route('ekyc.step3') }}" class="text-sm text-gray-500 hover:text-gray-700">← Kembali ke Step 3</a>
-                <button type="submit"
-                        class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
-                    Simpan & Selesaikan
+
+                @if ($data && $data->status === 'submitted')
+                        <a href="{{ route('ekyc.step5') }}" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Lanjut Step 5</a>
+                @else 
+                <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+                        Lanjut Step 5 →
                 </button>
+                @endif
             </div>
         </form>
     </div>

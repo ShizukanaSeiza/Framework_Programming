@@ -23,29 +23,55 @@ class AuthenticatedSessionController extends Controller
      * Handle an incoming authentication request.
      */
     public function store(LoginRequest $request): RedirectResponse
-    {
-        $request->authenticate();
-        $request->session()->regenerate();
+{
+    $request->authenticate();
+    $request->session()->regenerate();
 
-        $user = Auth::user();
+    $user = Auth::user();
 
-        // 🔹 Redirect berdasarkan role
-        if ($user->role === 'admin') {
-            return redirect()->route('dashboard');
-        }
-
-        // Ambil data eKYC milik user yang login
-        $ekyc = \App\Models\EkycRegistration::where('user_id', auth()->id())->first();
-
-        if ($ekyc && $ekyc->status === 'submitted') {
-            // Jika eKYC sudah selesai
-            return redirect()->route('ekyc.step5');
-        } else {
-            // Jika belum ada atau belum selesai
-            return redirect()->route('ekyc.step1');
-        }
-
+    // 🔹 Jika Admin → langsung ke dashboard
+    if ($user->role === 'admin') {
+        return redirect()->route('dashboard');
     }
+
+    // 🔹 Ambil data eKYC milik user
+    $ekyc = \App\Models\EkycRegistration::where('user_id', $user->id)->first();
+
+    // 🔹 Jika data eKYC ditemukan, buat notifikasi status
+    if ($ekyc) {
+        $status = strtolower($ekyc->status);
+
+        if ($status === 'accepted') {
+            session()->flash('ekyc_status', [
+                'type' => 'success',
+                'message' => 'Registrasi eKYC Anda telah diterima (ACCEPTED).'
+            ]);
+        } elseif ($status === 'rejected') {
+            session()->flash('ekyc_status', [
+                'type' => 'error',
+                'message' => 'Registrasi eKYC Anda ditolak (REJECTED). Silakan perbaiki data.'
+            ]);
+        } elseif ($status === 'submitted') {
+            session()->flash('ekyc_status', [
+                'type' => 'info',
+                'message' => 'Registrasi eKYC Anda sedang diproses (SUBMITTED).'
+            ]);
+        } elseif ($status === 'draft') {
+            session()->flash('ekyc_status', [
+                'type' => 'warning',
+                'message' => 'Anda belum menyelesaikan registrasi eKYC (DRAFT).'
+            ]);
+        }
+    }
+
+    // 🔹 Redirect ke halaman sesuai status
+    if ($ekyc && $ekyc->status !== 'draft') {
+        return redirect()->route('ekyc.step5');
+    } else {
+        return redirect()->route('ekyc.step1');
+    }
+}
+
 
     /**
      * Destroy an authenticated session.
@@ -55,6 +81,7 @@ class AuthenticatedSessionController extends Controller
         Auth::guard('web')->logout();
 
         $request->session()->invalidate();
+
         $request->session()->regenerateToken();
 
         return redirect('/');
