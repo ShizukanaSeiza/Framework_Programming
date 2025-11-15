@@ -34,8 +34,17 @@ class AuthenticatedSessionController extends Controller
             return redirect()->route('dashboard');
         }
 
-        // Default untuk user biasa → ke halaman step 1
-        return redirect()->route('ekyc.step1');
+        // Ambil data eKYC milik user yang login
+        $ekyc = \App\Models\EkycRegistration::where('user_id', auth()->id())->first();
+
+        if ($ekyc && $ekyc->status === 'submitted') {
+            // Jika eKYC sudah selesai
+            return redirect()->route('ekyc.step5');
+        } else {
+            // Jika belum ada atau belum selesai
+            return redirect()->route('ekyc.step1');
+        }
+
     }
 
     /**

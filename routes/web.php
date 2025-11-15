@@ -7,6 +7,8 @@ use App\Http\Controllers\DosenController;
 use App\Http\Controllers\RuanganController;
 use App\Http\Controllers\Auth\StudentRegisterController;
 use App\Http\Controllers\EkycController;
+use App\Http\Controllers\Admin\EkycAdminController;
+
 
 
 
@@ -35,6 +37,13 @@ Route::middleware('auth')->group(function () {
     Route::resource('ruangan', RuanganController::class)->middleware(['auth']);
     Route::resource('matkul', MatkulController::class)->middleware(['auth']);
     Route::resource('dosen', DosenController::class)->middleware(['auth']);
+
+    Route::prefix('admin')->group(function () {
+        Route::get('/ekyc', [EkycAdminController::class, 'index'])->name('admin.ekyc.index');
+        Route::get('/ekyc/{id}', [EkycAdminController::class, 'show'])->name('admin.ekyc.show');
+        Route::post('/ekyc/{id}/verify', [EkycAdminController::class, 'verify'])->name('admin.ekyc.verify');
+    });
+
 });
 
 Route::get('/register-mahasiswa', [StudentRegisterController::class, 'showRegistrationForm'])
@@ -58,7 +67,8 @@ Route::middleware(['auth'])->prefix('ekyc')->group(function () {
     // Step 4 – Alamat Domisili & Referensi Sumber
     Route::get('/ekyc/step4', [EkycController::class, 'showStep4'])->name('ekyc.step4');
     Route::post('/ekyc/step4', [EkycController::class, 'storeStep4'])->name('ekyc.step4.store');
-        
+
+    Route::get('/ekyc/step5', [EkycController::class, 'step5'])->name('ekyc.step5');
 });
 
 

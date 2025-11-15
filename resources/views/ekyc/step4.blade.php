@@ -87,7 +87,7 @@
                 <a href="{{ route('ekyc.step3') }}" class="text-sm text-gray-500 hover:text-gray-700">← Kembali ke Step 3</a>
                 <button type="submit"
                         class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
-                    Simpan & Lanjut Step 5
+                    Simpan & Selesaikan
                 </button>
             </div>
         </form>
