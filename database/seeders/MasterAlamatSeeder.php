@@ -15,9 +15,9 @@ class MasterAlamatSeeder extends Seeder
     {
         DB::table('master_alamat')->insert([
             [
-                'provinsi' => 'DKI Jakarta',
-                'kota' => "Jakarta Pusat",
-                'kecamatan' => "Menteng",
+                'provinsi' => 'DKI Jakarta', 
+                'kota' => "Jakarta Pusat", 
+                'kecamatan' => "Menteng", 
                 'kode_pos' => "10310",
                 'created_at' => now(),
                 'updated_at' => now(),
