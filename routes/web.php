@@ -10,15 +10,24 @@ use App\Http\Controllers\EkycController;
 use App\Http\Controllers\Admin\EkycAdminController;
 use App\Http\Controllers\LandingController;
 
+use App\Http\Controllers\Admin\LandingSettingController;
+use App\Http\Controllers\Admin\LandingNavController;
+use App\Http\Controllers\Admin\LandingProgramController;
+use App\Http\Controllers\Admin\LandingFooterController;
+
 
 
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
-// Route::get('/', [LandingController::class, 'index'])->name('landing');
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+Route::get('/', [LandingController::class, 'index'])->name('home');
+
+
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -44,6 +53,16 @@ Route::middleware('auth')->group(function () {
         Route::get('/ekyc', [EkycAdminController::class, 'index'])->name('admin.ekyc.index');
         Route::get('/ekyc/{id}', [EkycAdminController::class, 'show'])->name('admin.ekyc.show');
         Route::post('/ekyc/{id}/verify', [EkycAdminController::class, 'verify'])->name('admin.ekyc.verify');
+    });
+
+    /** LANDING PAGE CMS */
+    Route::prefix('admin/landing')->name('admin.landing.')->group(function () {
+        Route::resource('settings', LandingSettingController::class)->only(['index','edit','update']);
+        Route::resource('navigation', LandingNavController::class)->except(['show']);
+        Route::resource('programs', LandingProgramController::class)->except(['show']);
+        Route::resource('footer',   LandingFooterController::class)->except(['show']);
+        Route::post('footer/reorder', [LandingFooterController::class, 'reorder'])->name('admin.landing.footer.reorder');
+        Route::patch('footer/{id}/status', [LandingFooterController::class, 'toggleStatus'])->name('admin.landing.footer.toggleStatus');
     });
 
 });

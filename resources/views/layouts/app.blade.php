@@ -42,6 +42,59 @@
                             class="block px-4 py-2 hover:bg-gray-200 {{ request()->routeIs('admin.*') ? 'bg-gray-200 font-semibold' : '' }}">
                         eKYC Registration
                         </a>
+                        
+                        {{-- Landing Page Group --}}
+                        <div x-data="{ open: {{ request()->is('admin/landing*') ? 'true' : 'false' }} }" class="mt-2">
+
+                            <!-- Parent Item -->
+                            <button @click="open = !open"
+                                class="w-full flex items-center justify-between px-4 py-2 hover:bg-gray-200 
+                                {{ request()->is('admin/landing*') ? 'bg-gray-200 font-semibold' : '' }}">
+                                <span>📰 Landing Page</span>
+                                <svg x-show="!open" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 9l-7 7-7-7" />
+                                </svg>
+
+                                <svg x-show="open" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 15l7-7 7 7" />
+                                </svg>
+                            </button>
+
+                            <!-- Collapsible Menu -->
+                            <div x-show="open" x-transition class="pl-6 space-y-1">
+                                
+                                <a href="{{ route('admin.landing.settings.index') }}"
+                                    class="block px-4 py-2 hover:bg-gray-200 
+                                    {{ request()->routeIs('admin.landing.settings.*') ? 'bg-gray-200 font-semibold' : '' }}">
+                                    🛠 Settings
+                                </a>
+
+                                <a href="{{ route('admin.landing.navigation.index') }}"
+                                    class="block px-4 py-2 hover:bg-gray-200 
+                                    {{ request()->routeIs('admin.landing.navigation.*') ? 'bg-gray-200 font-semibold' : '' }}">
+                                    📌 Menu Navigasi
+                                </a>
+
+                                <a href="{{ route('admin.landing.programs.index') }}"
+                                    class="block px-4 py-2 hover:bg-gray-200 
+                                    {{ request()->routeIs('admin.landing.programs.*') ? 'bg-gray-200 font-semibold' : '' }}">
+                                    🎓 Program Studi
+                                </a>
+
+                                <a href="{{ route('admin.landing.footer.index') }}"
+                                    class="block px-4 py-2 hover:bg-gray-200 
+                                    {{ request()->routeIs('admin.landing.footer.*') ? 'bg-gray-200 font-semibold' : '' }}">
+                                    📄 Footer
+                                </a>
+
+                            </div>
+                        </div>
+
+
                     @endif
                 </nav>
             </aside>
