@@ -65,7 +65,7 @@
 
                                         <td class="px-3 py-2">
                                             <span class="{{ $setting->status ? 'text-green-600' : 'text-gray-500' }}">
-                                                {{ $setting->status ? 'Active' : Inactive' }}
+                                                {{ $setting->status ? 'Active' : 'Inactive' }}
                                             </span>
                                         </td>
 

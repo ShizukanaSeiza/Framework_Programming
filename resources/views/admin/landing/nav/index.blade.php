@@ -16,7 +16,7 @@
                 </div>
             @endif
 
-            {{-- Tombol Tambal --}}
+            {{-- Tombol Tambah --}}
             <div class="mb-6">
                 <button @click="openCreateModal()"
                     class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
@@ -136,6 +136,7 @@
                             Simpan    
                         </button>
                     </div>
+
                 </form>
 
             </div>    
@@ -165,14 +166,23 @@
                            class="border-gray-300 rounded-md w-full" 
                            required>
                 </div>
-
+                
                 <div>
                     <label class="block mb-1">URL</label>
-                    <input type="status"
+                    <input type="text"
                             name="url"
                             x-model="editData.url"
                             class="border-gray-300 rounded-md w-full"
                             required>
+                </div>
+
+                <div>
+                    <label class="block mb-1">Position</label>
+                    <input type="number"
+                           name="position"
+                           x-model="editData.position"
+                           class="border-gray-300 rounded-md w-full" 
+                           required>
                 </div>
 
                 <div>
@@ -203,6 +213,8 @@
             </div>    
         </div>
 
+
+        
     </div>
 
     {{-- ALPINE.JS CONTROLLER --}}

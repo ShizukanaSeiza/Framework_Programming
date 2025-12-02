@@ -16,7 +16,7 @@
                 </div>
             @endif
 
-            {{-- Tombol Tambal --}}
+            {{-- Tombol Tambah --}}
             <div class="mb-6">
                 <button @click="openCreateModal()"
                     class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
@@ -158,7 +158,7 @@
 
                 <div>
                     <label class="block mb-1">URL</label>
-                    <input type="status"
+                    <input type="text"
                             name="url"
                             x-model="editData.url"
                             class="border-gray-300 rounded-md w-full">

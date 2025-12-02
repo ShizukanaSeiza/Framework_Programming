@@ -45,10 +45,10 @@
                         </thead>
 
                         <tbody>
-                            @foreach($programs as $item)
+                            @foreach($programs as $program)
                                 <tr>
                                     <td class="border px-4 py-2 text-center">
-                                        @if(program->image)
+                                        @if($program->image)
                                             <img src="{{ asset('storage/'.$program->image) }}" class="h-12 mx-auto rounded">
                                         else
                                             -
@@ -59,7 +59,7 @@
                                     <td class="border px-4 py-2 text-center">{{ $program->position }}</td>
 
                                     <td class="border px-4 py-2 text-center">
-                                        <span class="px-2 py-1 rounded text-white {{ $item->status ? 'bg-green-600' :
+                                        <span class="px-2 py-1 rounded text-white {{ $program->status ? 'bg-green-600' :
                                         'bg-red-600' }}">
                                             {{ $program->status ? 'Aktif' : 'Nonaktif' }}
                                         </span>
@@ -69,17 +69,17 @@
 
                                         {{-- EDIT --}}
                                         <button 
-                                            @click="openEditModal({{ $item }})"
+                                            @click="openEditModal({{ $program }})"
                                             class="px-3 py-1 bg-yellow-500 text-white rounded">
                                             Edit    
                                         </button>
 
                                         {{-- DELETE --}}
-                                        <form action="{{ route('admin.landing.navigation.destroy', $item->id) }}"
+                                        <form action="{{ route('admin.landing.programs.destroy', $program->id) }}"
                                               method="POST" class="inline-block">
                                             @csrf @method('DELETE')
                                             <button type="submit"
-                                                onclick="return confirm('Hapus menu ini?')"
+                                                onclick="return confirm('Hapus program ini?')"
                                                 class="px-3 py-1 bg-red-600 text-white rounded">
                                                 Hapus
                                             </button>
@@ -116,7 +116,7 @@
 
                     <div>
                         <label class="block mb-1">Description</label>
-                        <input type="text" name="description" class="border-gray-300 rounded-md w-full" required>
+                        <textarea name="description" class="border-gray-300 rounded-md w-full"></textarea>
                     </div>
 
                     <div>
@@ -127,6 +127,11 @@
                     <div>
                         <label class="block mb-1">Position</label>
                         <input type="number" name="position" value="0" class="border-gray-300 rounded-md w-full" required>
+                    </div>
+                    
+                    <div>
+                        <label class="block mb-1">Image</label>
+                        <input type="file" name="image" class="border-gray-300 rounded-md w-full">
                     </div>
 
                     <div>
@@ -163,10 +168,6 @@
             <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg w-96">
                 
                 <h2 class="text-xl font-semibold mb-4">Edit Program</h2>
-                
-                <form method="POST"
-                      :action="">
-                </form>
 
                 <form method="POST"
                       :action="'/admin/landing/programs/' + editData.id"
@@ -174,22 +175,47 @@
                     @csrf
                     @method('PUT')
 
-                <div>
-                    <label class="block mb-1">Label</label>
+                <div class="">
+                    <label class="block mb-1">Title</label>
                     <input type="text"
-                           name="label"
-                           x-model="editData.label"
+                           name="title"
+                           x-model="editData.title"
                            class="border-gray-300 rounded-md w-full" 
-                           required>
+                    required>
+                </div>
+
+                <div class="">
+                    <label class="block mb-1">Description</label>
+                    <textarea name="description"
+                              x-model="editData.description"
+                              class="border-gray-300 rounded-md w-full">
+                    </textarea> 
+                </div>
+
+                <div class="">
+                    <label class="block mb-1">Icon</label>
+                    <input type="text"
+                           name="icon"
+                           x-model="editData.icon"
+                           class="border-gray-300 rounded-md w-full" 
+                    required>
+                </div>
+
+                <div class="">
+                    <label class="block mb-1">Position</label>
+                    <input type="number"
+                           name="position"
+                           x-model="editData.position"
+                           class="border-gray-300 rounded-md w-full" 
+                    required>
                 </div>
 
                 <div>
-                    <label class="block mb-1">URL</label>
-                    <input type="status"
-                            name="url"
-                            x-model="editData.url"
-                            class="border-gray-300 rounded-md w-full"
-                            required>
+                    <label class="block mb-1">Image (ganti jika perlu)</label>
+                    <input type="file" name="image" class="border-gray-300 rounded-md w-full">
+                    <template x-if="editData.image">
+                        <img :src="'/storage/' + editData.image" class="mt-2 h-20 rounded">
+                    </template>
                 </div>
 
                 <div>
@@ -214,7 +240,6 @@
                             Update    
                         </button>
                     </div>
-
                 </form>
 
             </div>    
@@ -224,11 +249,10 @@
 
     {{-- ALPINE.JS CONTROLLER --}}
     <script>
-        function navPage() {
+        function programPage() {
             return {
                 showCreate: false,
                 showEdit: false,
-
                 editData: {},
 
                 openCreateModal() {
@@ -238,14 +262,16 @@
                 openEditModal(item) {
                     this.editData = {
                         id: item.id,
-                        label: item.label,
-                        url: item.url,
+                        title: item.title,
+                        description: item.description,
+                        icon: item.icon,
                         position: item.position,
                         status: item.status,
+                        image: item.image ?? ''
                     };
                     this.showEdit = true;
                 }
-            }
+            };
         }
     </script>
     
